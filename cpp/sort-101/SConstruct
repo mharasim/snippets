@@ -1,0 +1,28 @@
+# vim: set filetype=python :
+
+env_basic = Environment(CXX = 'g++', CXXFLAGS = Split('-Wall -std=c++11'))
+
+src_files = Split("""heapsort.cpp 
+                     quicksort.cpp 
+                     insertionsort.cpp 
+                     mergesort.cpp 
+                     bubblesort.cpp
+            """)
+
+env_static = env_basic.Clone(OBJPREFIX = 'static_')
+static_obj = env_static.Object(src_files)    
+env_static.StaticLibrary('sort', static_obj)
+# Need to force static linking
+static_library = File('./libsort.a')
+
+env_static.Program(target = 'static_test', source = Split('test.cpp'), LIBS = static_library)
+
+
+env_shared = env_basic.Clone(OBJPREFIX = 'shared_', RPATH = '.')
+#This is done with SharedObject
+#env_shared.Append(CXXFLAGS = Split('-fPIC'))
+shared_obj = env_shared.SharedObject(src_files) 
+env_shared.SharedLibrary('sort', shared_obj)
+
+env_shared.Program(target = 'shared_test', source = Split('test.cpp'), LIBS = 'sort', LIBPATH = '.')
+
