@@ -8,21 +8,23 @@ void MergeSort::sort(std::vector<int>& elements)
 
 void MergeSort::merge(std::vector<int>& elements, int p, int q, int r)
 {
+	
 	std::vector<int> R;
 	std::vector<int> L;
 
 	L.insert(L.end(), elements.begin() + p, elements.begin() + q + 1);
 	R.insert(R.end(), elements.begin() + q + 1, elements.begin() + r + 1);
 
-	auto i = L.begin();
-	auto j = R.begin();
+	auto left = L.begin();
+	auto right = R.begin();
 
-	for (auto ia = (elements.begin() + p); ia != (elements.begin() + r); ia++) {
-		if (i == L.end()) *ia = *(j++);
-		else if (j == R.end()) *ia = *(i++);
-		else if (*i < *j) *ia = *(i++); 
-		else *ia = *(j++);
+	for (auto e = (elements.begin() + p); e != (elements.begin() + r); e++) {
+		if (left == L.end()) *e = *(right++); // L empty use R
+		else if (right == R.end()) *e = *(left++); // R empty use L
+		else if (*left < *right) *e = *(left++); // Assign and move to next whatever is smaller 
+		else *e = *(right++); 
 	}
+	
 }
 
 void MergeSort::merge_sort(std::vector<int>& elements, int p, int r)

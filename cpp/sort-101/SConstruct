@@ -7,6 +7,7 @@ src_files = Split("""heapsort.cpp
                      insertionsort.cpp 
                      mergesort.cpp 
                      bubblesort.cpp
+                     countingsort.cpp
             """)
 
 env_static = env_basic.Clone(OBJPREFIX = 'static_')
