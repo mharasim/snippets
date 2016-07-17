@@ -1,2 +1,2 @@
 # snippets
-Usefull code snippets
+Simple code fragments for educational and utility purposes.
